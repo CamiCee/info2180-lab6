@@ -7,12 +7,12 @@ window.onload = function()
     defbutton.addEventListener("click",function(){
          httpRequest = new XMLHttpRequest(); 
          var word = document.querySelector('#word').value;
-         var url="https://info2180-lab6-04-cami-cee.c9users.io/request.php?q=definition";
-        
+         var url="request.php";
          
         httpRequest.onreadystatechange = Req;
-         httpRequest.open('GET', url);
-        httpRequest.send();
+        httpRequest.open('POST', url);
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.send('q=' + encodeURIComponent(word));
          
     });
     
@@ -23,8 +23,9 @@ window.onload = function()
             if (httpRequest.status === 200) 
             {
                
-                alert(httpRequest.responseText);
-        
+                var response = httpRequest.responseText;
+                var result = document.querySelector('#result');
+                result.innerHTML = response;
             } 
             else 
             {
